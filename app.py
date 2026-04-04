@@ -85,3 +85,11 @@ def report():
     conn.close()
 
     return render_template("success.html")
+
+@app.route('/view')
+def view():
+    conn = get_db()
+    incidents = conn.execute("SELECT * FROM incidents").fetchall()
+    conn.close()
+
+    return render_template("view.html", incidents=incidents)
