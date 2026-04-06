@@ -95,3 +95,11 @@ def view():
     conn.close()
 
     return render_template("view.html", incidents=incidents)
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    conn = get_db()
+    conn.execute("DELETE FROM incidents WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+    return redirect('/view')
