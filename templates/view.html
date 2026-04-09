@@ -71,27 +71,27 @@
 
             <tbody>
                 {% for incident in incidents %}
-                <tr>
-                    <td>{{ incident[0] }}</td>
-                    <td>{{ incident[1] }}</td>
-                    <td>{{ incident[2] }}</td>
+              <tr>
+    <td>{{ incident[0] }}</td>  
+    <td>{{ incident[1] }}</td>  
+    <td>{{ incident[2] }}</td> 
 
-                    <td>
-                        {% if incident[3] == 'Low' %}
-                            <span class="badge badge-low">Low</span>
-                        {% elif incident[3] == 'Medium' %}
-                            <span class="badge badge-medium">Medium</span>
-                        {% else %}
-                            <span class="badge badge-high">High</span>
-                        {% endif %}
-                    </td>
+    <td>
+        {% if incident[3] == 'Low' %}
+            <span class="badge badge-low">Low</span>
+        {% elif incident[3] == 'Medium' %}
+            <span class="badge badge-medium">Medium</span>
+        {% else %}
+            <span class="badge badge-high">High</span>
+        {% endif %}
+    </td>
 
-                    <td>{{ incident[4] }}</td>
-                    <td>
-                        <a href="/delete/{{ incident[0] }}" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                    </td>
-                </tr>
+    <td>{{ incident[4] }}</td>  
+
+    <td>
+        <a href="/delete/{{ incident[0] }}" class="btn btn-danger btn-sm">Delete</a>
+    </td>
+</tr>
                 {% endfor %}
             </tbody>
 
