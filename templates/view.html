@@ -45,59 +45,67 @@
 
 <div class="container mt-5">
 
-    <h2 class="text-center mb-4">
-        <i class="fas fa-exclamation-triangle"></i> Incident Reports
-    </h2>
-
     <h5 class="text-center mb-3">
-    <span class="badge bg-info text-dark">
         Total Incidents: {{ incidents|length }}
-    </span>
-</h5>
+    </h5>
+
+    <form method="GET" action="/view" style="margin-bottom:20px;">
+        <input type="text" name="search" placeholder="Search title">
+
+        <select name="severity">
+            <option value="">All</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
 
     <div class="card shadow p-4 bg-white text-dark">
 
-        <table class="table table-hover text-center align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Severity</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+    <table class="table table-bordered table-hover text-center">
 
-            <tbody>
-                {% for incident in incidents %}
-              <tr>
-    <td>{{ incident[0] }}</td>  
-    <td>{{ incident[1] }}</td>  
-    <td>{{ incident[2] }}</td> 
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Severity</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-    <td>
-        {% if incident[3] == 'Low' %}
-            <span class="badge badge-low">Low</span>
-        {% elif incident[3] == 'Medium' %}
-            <span class="badge badge-medium">Medium</span>
-        {% else %}
-            <span class="badge badge-high">High</span>
-        {% endif %}
-    </td>
+        <tbody>
+        {% for incident in incidents %}
+        <tr>
+            <td>{{ incident[0] }}</td>
+            <td>{{ incident[1] }}</td>
+            <td>{{ incident[2] }}</td>
 
-    <td>{{ incident[4] }}</td>  
+            <td>
+                {% if incident[3] == 'Low' %}
+                    <span class="badge bg-success">Low</span>
+                {% elif incident[3] == 'Medium' %}
+                    <span class="badge bg-warning text-dark">Medium</span>
+                {% else %}
+                    <span class="badge bg-danger">High</span>
+                {% endif %}
+            </td>
 
-    <td>
-        <a href="/delete/{{ incident[0] }}" class="btn btn-danger btn-sm">Delete</a>
-    </td>
-</tr>
-                {% endfor %}
-            </tbody>
+            <td>{{ incident[4] }}</td>
 
-        </table>
+            <td>
+                <a href="/delete/{{ incident[0] }}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
 
-    </div>
+    </table>
+
+</div>
 
 </div>
 
