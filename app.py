@@ -104,6 +104,7 @@ def dashboard():
         return redirect('/')
 
     user = session['user']
+
     conn = get_db()
 
     total = conn.execute(
@@ -112,17 +113,17 @@ def dashboard():
     ).fetchone()[0]
 
     high = conn.execute(
-        "SELECT COUNT(*) FROM incidents WHERE user=? AND severity='High'",
+        "SELECT COUNT(*) FROM incidents WHERE severity='High' AND user=?",
         (user,)
     ).fetchone()[0]
 
     medium = conn.execute(
-        "SELECT COUNT(*) FROM incidents WHERE user=? AND severity='Medium'",
+        "SELECT COUNT(*) FROM incidents WHERE severity='Medium' AND user=?",
         (user,)
     ).fetchone()[0]
 
     low = conn.execute(
-        "SELECT COUNT(*) FROM incidents WHERE user=? AND severity='Low'",
+        "SELECT COUNT(*) FROM incidents WHERE severity='Low' AND user=?",
         (user,)
     ).fetchone()[0]
 
@@ -138,22 +139,19 @@ def dashboard():
 
 @app.route('/report_page')
 def report_page():
-    return render_template('report.html')
+        return render_template('report.html')
 
 @app.route('/report', methods=['POST'])
 def report():
-
     if 'user' not in session:
         return redirect('/')
 
-   
     title = request.form['title']
     description = request.form['description']
     severity = request.form['severity']
     date = request.form['date']
-    user = session ['user']
-    
-
+    user = session['user']
+   
     if not title or not description or not severity or not date:
         return "All fields are required"
 
@@ -168,7 +166,6 @@ def report():
 
     return render_template ("Success.html")
 
-    
 @app.route('/view')
 def view():
     if 'user' not in session:
@@ -196,6 +193,7 @@ def view():
     conn.close()
 
     return render_template("view.html", incidents=incidents)
+
 @app.route('/delete/<int:id>')
 def delete(id):
 
@@ -236,7 +234,7 @@ def api_incidents():
             "date": i[4]
         })
 
-    return render_template("api_view.html", data=json.dumps(data, indent=4))
+    return render_template("api_view.html", data=data)
 
 @app.route('/logout')
 def logout():
